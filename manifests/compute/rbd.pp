@@ -63,7 +63,7 @@ class nova::compute::rbd (
 
   if $live_migration_flag {
     nova_config {
-      'DEFAULT/live_migration_flag':          value => $live_migration_flag;
+      'libvirt/live_migration_flag':          value => $live_migration_flag;
     }
   }
 
