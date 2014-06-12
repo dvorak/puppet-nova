@@ -38,7 +38,6 @@ describe 'nova::compute::rbd' do
         should contain_nova_config('libvirt/images_rbd_pool').with_value('rbd')
         should contain_nova_config('libvirt/images_rbd_ceph_conf').with_value('/etc/ceph/ceph.conf')
         should contain_nova_config('libvirt/rbd_user').with_value('nova')
-        should_not contain_nova_config('libvirt/live_migration_flag')
     end
 
     context 'when overriding default parameters' do
@@ -47,8 +46,7 @@ describe 'nova::compute::rbd' do
           :libvirt_rbd_user             => 'joe',
           :libvirt_rbd_secret_uuid      => false,
           :libvirt_images_rbd_pool      => 'AnotherPool',
-          :libvirt_images_rbd_ceph_conf => '/tmp/ceph.conf',
-          :live_migration_flag          => 'VIR_MIGRATE_UNDEFINE_SOURCE,VIR_MIGRATE_PEER2PEER,VIR_MIGRATE_LIVE'
+          :libvirt_images_rbd_ceph_conf => '/tmp/ceph.conf'
         )
       end
 
@@ -57,7 +55,6 @@ describe 'nova::compute::rbd' do
           should contain_nova_config('libvirt/images_rbd_pool').with_value('AnotherPool')
           should contain_nova_config('libvirt/images_rbd_ceph_conf').with_value('/tmp/ceph.conf')
           should contain_nova_config('libvirt/rbd_user').with_value('joe')
-          should contain_nova_config('libvirt/live_migration_flag').with_value('VIR_MIGRATE_UNDEFINE_SOURCE,VIR_MIGRATE_PEER2PEER,VIR_MIGRATE_LIVE')
       end
     end
 

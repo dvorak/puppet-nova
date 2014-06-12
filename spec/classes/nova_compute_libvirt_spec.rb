@@ -37,6 +37,7 @@ describe 'nova::compute::libvirt' do
       it { should contain_nova_config('libvirt/virt_type').with_value('kvm')}
       it { should contain_nova_config('libvirt/cpu_mode').with_value('host-model')}
       it { should contain_nova_config('libvirt/disk_cachemodes').with_ensure('absent')}
+      it { should contain_nova_config('libvirt/live_migration_flag').with_ensure('absent')}
       it { should contain_nova_config('DEFAULT/vncserver_listen').with_value('127.0.0.1')}
       it { should contain_nova_config('DEFAULT/remove_unused_base_images').with_ensure('absent')}
       it { should contain_nova_config('DEFAULT/remove_unused_original_minimum_age_seconds').with_ensure('absent')}
@@ -50,6 +51,7 @@ describe 'nova::compute::libvirt' do
           :vncserver_listen                           => '0.0.0.0',
           :libvirt_cpu_mode                           => 'host-passthrough',
           :libvirt_disk_cachemodes                    => ['file=directsync','block=none'],
+          :live_migration_flag                        => 'VIR_MIGRATE_UNDEFINE_SOURCE,VIR_MIGRATE_PEER2PEER,VIR_MIGRATE_LIVE',
           :remove_unused_base_images                  => true,
           :remove_unused_kernels                      => true,
           :remove_unused_resized_minimum_age_seconds  => 3600,
@@ -60,6 +62,7 @@ describe 'nova::compute::libvirt' do
       it { should contain_nova_config('libvirt/virt_type').with_value('qemu')}
       it { should contain_nova_config('libvirt/cpu_mode').with_value('host-passthrough')}
       it { should contain_nova_config('libvirt/disk_cachemodes').with_value('file=directsync,block=none')}
+      it { should contain_nova_config('libvirt/live_migration_flag').with_value('VIR_MIGRATE_UNDEFINE_SOURCE,VIR_MIGRATE_PEER2PEER,VIR_MIGRATE_LIVE')}
       it { should contain_nova_config('DEFAULT/vncserver_listen').with_value('0.0.0.0')}
       it { should contain_nova_config('DEFAULT/remove_unused_base_images').with_value(true)}
       it { should contain_nova_config('DEFAULT/remove_unused_original_minimum_age_seconds').with_value(3600)}
@@ -147,6 +150,7 @@ describe 'nova::compute::libvirt' do
 
       it { should contain_nova_config('DEFAULT/compute_driver').with_value('libvirt.LibvirtDriver')}
       it { should contain_nova_config('libvirt/virt_type').with_value('kvm')}
+      it { should contain_nova_config('libvirt/live_migration_flag').with_ensure('absent')}
       it { should contain_nova_config('DEFAULT/vncserver_listen').with_value('127.0.0.1')}
       it { should contain_nova_config('DEFAULT/remove_unused_base_images').with_ensure('absent')}
       it { should contain_nova_config('DEFAULT/remove_unused_original_minimum_age_seconds').with_ensure('absent')}
@@ -158,6 +162,7 @@ describe 'nova::compute::libvirt' do
       let :params do
         { :libvirt_virt_type                          => 'qemu',
           :vncserver_listen                           => '0.0.0.0',
+          :live_migration_flag                        => 'VIR_MIGRATE_UNDEFINE_SOURCE,VIR_MIGRATE_PEER2PEER,VIR_MIGRATE_LIVE',
           :remove_unused_base_images                  => true,
           :remove_unused_kernels                      => true,
           :remove_unused_resized_minimum_age_seconds  => 3600,
@@ -166,6 +171,7 @@ describe 'nova::compute::libvirt' do
       end
 
       it { should contain_nova_config('libvirt/virt_type').with_value('qemu')}
+      it { should contain_nova_config('libvirt/live_migration_flag').with_value('VIR_MIGRATE_UNDEFINE_SOURCE,VIR_MIGRATE_PEER2PEER,VIR_MIGRATE_LIVE')}
       it { should contain_nova_config('DEFAULT/vncserver_listen').with_value('0.0.0.0')}
       it { should contain_nova_config('DEFAULT/remove_unused_base_images').with_value(true)}
       it { should contain_nova_config('DEFAULT/remove_unused_original_minimum_age_seconds').with_value(3600)}

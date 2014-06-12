@@ -31,6 +31,10 @@
 #   will be removed from nova.conf completely.
 #   Defaults to an empty list
 #
+# [*live_migration_flag*]
+#   (optional) This controls how live migration works.
+#   The default does NOT allow live migration.
+#
 # [*remove_unused_base_images*]
 #   (optional) Should unused base images be removed?
 #   If undef is specified, remove the line in nova.conf
@@ -68,6 +72,7 @@ class nova::compute::libvirt (
   $migration_support                          = false,
   $libvirt_cpu_mode                           = false,
   $libvirt_disk_cachemodes                    = [],
+  $live_migration_flag                        = undef,
   $remove_unused_base_images                  = undef,
   $remove_unused_kernels                      = undef,
   $remove_unused_resized_minimum_age_seconds  = undef,
@@ -154,6 +159,16 @@ class nova::compute::libvirt (
   } else {
     nova_config {
       'libvirt/disk_cachemodes': ensure => absent;
+    }
+  }
+
+  if $live_migration_flag {
+    nova_config {
+      'libvirt/live_migration_flag':          value => $live_migration_flag;
+    }
+  } else {
+    nova_config {
+      'libvirt/live_migration_flag': ensure => absent;
     }
   }
 
