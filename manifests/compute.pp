@@ -84,8 +84,8 @@ class nova::compute (
   $virtio_nic                    = false,
   $neutron_enabled               = true,
   $network_device_mtu            = undef,
-  $instance_usage_audit          = true,
-  $instance_usage_audit_period   = 'hour'
+  $instance_usage_audit          = false,
+  $instance_usage_audit_period   = 'month'
 ) {
 
   include nova::params

@@ -319,7 +319,7 @@ class nova(
   $notification_driver      = [],
   $notification_topics      = 'notifications',
   $notify_api_faults        = false,
-  $notify_on_state_change   = 'vm_and_task_state',
+  $notify_on_state_change   = undef,
   # DEPRECATED PARAMETERS
   # this is how to query all resources from our clutser
   $nova_cluster_id          = undef,
